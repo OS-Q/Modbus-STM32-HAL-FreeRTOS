@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        example:
+          - "STM32F429"
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v2
+        with:
+          submodules: "recursive"
+          fetch-depth: 1
+
+      - name: build
+        uses: Qful/cubeide-action@master
+        with:
+          project-path: project/${{ matrix.example }}
+          project-target: ${{ matrix.example }}
+
+      - name: upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.example }}
+          path: project/${{ matrix.example }}/Debug/${{ matrix.example }}.bin
