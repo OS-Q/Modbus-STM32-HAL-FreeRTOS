@@ -11,9 +11,13 @@ jobs:
       fail-fast: false
       matrix:
         example:
+          - "ModbusBluepillUSB"
           - "ModbusF103"
+          - "ModbusF303"
           - "ModbusF429"
           - "ModbusH743"
+        target:
+          - "Debug"
 
     runs-on: ubuntu-latest
     steps:
@@ -27,10 +31,10 @@ jobs:
         uses: Qful/cubeide-action@master
         with:
           project-path: Examples/${{ matrix.example }}
-          project-target: ${{ matrix.example }}
+          project-target: ${{ matrix.target }}
 
       - name: upload
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.example }}
-          path: Examples/${{ matrix.example }}/Debug/${{ matrix.example }}.bin
+          path: Examples/${{ matrix.example }}/${{ matrix.target }}/${{ matrix.example }}.bin
