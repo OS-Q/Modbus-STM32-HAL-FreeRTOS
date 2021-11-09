@@ -101,17 +101,17 @@ int main(void)
   //ModbusH.uModbusType = MB_SLAVE;
   ModbusH.uModbusType = MB_MASTER;
   //ModbusH.port =  &huart3; //this is not used for TCP
-  ModbusH.u8id = 1; //slave ID
+  // ModbusH.u8id = 1; //slave ID
   ModbusH.u8id = 0; //slave ID for master always 0
   //ModbusH.u16timeOut = 10; // For a slave keep this value around 10 for better responsiveness,
-  ModbusH.u16timeOut = 100; // for a master it could be higher depending on the slave speed
+  ModbusH.u16timeOut = 1000; // for a master it could be higher depending on the slave speed
   ModbusH.EN_Port = NULL; // No RS485
    //ModbusH2.EN_Port = LD2_GPIO_Port; // RS485 Enable
    //ModbusH2.EN_Pin = LD2_Pin; // RS485 Enable
   ModbusH.u16regs = ModbusDATA;
   ModbusH.u16regsize= sizeof(ModbusDATA)/sizeof(ModbusDATA[0]);
   ModbusH.xTypeHW = TCP_HW; // TCP hardware
-  ModbusH.uTcpPort = 502;   // used only for the slave (i.e., server)
+
 
   //Initialize Modbus library
   ModbusInit(&ModbusH);
@@ -121,8 +121,8 @@ int main(void)
 
   ModbusH2.uModbusType = MB_SLAVE;
   //ModbusH.uModbusType = MB_MASTER;
-  ModbusH2.port =  &huart3;
-  ModbusH2.u8id = 10; //slave ID
+  // ModbusH2.port =  &huart3;
+  ModbusH2.u8id = 1; //slave ID
   //ModbusH.u8id = 0; //slave ID for master always 0
   ModbusH2.u16timeOut = 1000;
   ModbusH2.EN_Port = NULL; // No RS485
@@ -130,7 +130,8 @@ int main(void)
    //ModbusH2.EN_Pin = LD2_Pin; // RS485 Enable
   ModbusH2.u16regs = ModbusDATA2;
   ModbusH2.u16regsize= sizeof(ModbusDATA2)/sizeof(ModbusDATA2[0]);
-  ModbusH2.xTypeHW = USART_HW; // Serial USART hardware
+  ModbusH2.xTypeHW = TCP_HW; // Serial USART hardware
+  ModbusH2.uTcpPort = 503;   // used only for the slave (i.e., server)
 
   //Initialize Modbus library
   ModbusInit(&ModbusH2);

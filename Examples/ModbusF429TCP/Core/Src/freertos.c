@@ -134,7 +134,9 @@ void StartDefaultTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    osDelay(100);
+    xSemaphoreTake(ModbusH2.ModBusSphrHandle , 500);
+    xSemaphoreGive(ModbusH2.ModBusSphrHandle);
   }
   /* USER CODE END StartDefaultTask */
 }
@@ -157,10 +159,10 @@ void StartTask02(void *argument)
 	telegram[0].u8fct = MB_FC_WRITE_MULTIPLE_REGISTERS; // function code (this one is registers read)
 	//telegram[0].u16RegAdd = 0x160; // start address in slave
 	telegram[0].u16RegAdd = 0x0; // start address in slave
-	telegram[0].u16CoilsNo = 10; // number of elements (coils or registers) to read
+	telegram[0].u16CoilsNo = 1; // number of elements (coils or registers) to read
 	telegram[0].u16reg = ModbusDATA; // pointer to a memory array in the microcontroller
-	IP_ADDR4((ip4_addr_t *)&telegram[0].xIpAddress, 10, 75, 15, 61); //address of the slave
-	telegram[0].u16Port = 5020;
+	IP_ADDR4((ip4_addr_t *)&telegram[0].xIpAddress, 192, 168, 10, 115); //address of the slave
+	telegram[0].u16Port = 502;
 	telegram[0].u8clientID = 0; // this identifies the TCP client session. The library supports up to "NUMBERTCPCONN"
 							 //	simultaneous connections to different slaves. The value is defined in ModbusConfig.h file.
 							 // The library uses the IP and port to open the TCP connection and keep the connection open regardless
@@ -170,11 +172,11 @@ void StartTask02(void *argument)
 	telegram[1].u8id = 1; // slave address
 	telegram[1].u8fct = MB_FC_WRITE_MULTIPLE_REGISTERS; // function code (this one is registers read)
 	//telegram[0].u16RegAdd = 0x160; // start address in slave
-	telegram[1].u16RegAdd = 0x0; // start address in slave
-	telegram[1].u16CoilsNo = 10; // number of elements (coils or registers) to read
+	telegram[1].u16RegAdd = 0x2; // start address in slave
+	telegram[1].u16CoilsNo = 1; // number of elements (coils or registers) to read
 	telegram[1].u16reg = ModbusDATA; // pointer to a memory array in the microcontroller
-	IP_ADDR4((ip4_addr_t *)&telegram[1].xIpAddress, 10, 75, 15, 61); //address of the slave
-	telegram[1].u16Port = 5024;
+	IP_ADDR4((ip4_addr_t *)&telegram[1].xIpAddress, 192, 168, 10, 115); //address of the slave
+	telegram[1].u16Port = 502;
 	telegram[1].u8clientID = 1; //this telegram will use the second connection slot
 
 	for(;;)

@@ -31,10 +31,10 @@ jobs:
         uses: Qful/cubeide-action@master
         with:
           project-path: Examples/${{ matrix.example }}
-          project-target: ${{ matrix.target }}
+          project-target: ${{ matrix.example }}
 
       - name: upload
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.example }}
+          name: ${{ matrix.example }}-${{ matrix.target }}
           path: Examples/${{ matrix.example }}/${{ matrix.target }}/${{ matrix.example }}.bin
