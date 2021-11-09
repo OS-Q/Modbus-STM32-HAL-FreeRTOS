@@ -11,7 +11,9 @@ jobs:
       fail-fast: false
       matrix:
         example:
-          - "STM32F429"
+          - "ModbusF103"
+          - "ModbusF429"
+          - "ModbusH743"
 
     runs-on: ubuntu-latest
     steps:
@@ -24,11 +26,11 @@ jobs:
       - name: build
         uses: Qful/cubeide-action@master
         with:
-          project-path: project/${{ matrix.example }}
+          project-path: Examples/${{ matrix.example }}
           project-target: ${{ matrix.example }}
 
       - name: upload
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.example }}
-          path: project/${{ matrix.example }}/Debug/${{ matrix.example }}.bin
+          path: Examples/${{ matrix.example }}/Debug/${{ matrix.example }}.bin

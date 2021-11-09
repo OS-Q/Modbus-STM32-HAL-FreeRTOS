@@ -58,7 +58,6 @@ Video demo for STM32F4-dicovery board and TouchGFX: https://youtu.be/XDCQvu0LirY
 
 ```
 ## How to use the examples
-Examples provided for STM32CubeIDE Version: 1.3.0 https://www.st.com/en/development-tools/stm32cubeide.html.
 
 - Import the examples in the STM32Cube IDE from the system folder
 - Connect your NUCLEO board
