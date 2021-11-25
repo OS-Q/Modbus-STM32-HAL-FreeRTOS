@@ -34,7 +34,7 @@
 #define highByte(w) ((w) >> 8)
 
 
-
+modbusHandler_t *mHandlers[MAX_M_HANDLERS];
 
 ///Queue Modbus telegrams for master
 const osMessageQueueAttr_t QueueTelegram_attributes = {
@@ -1553,11 +1553,11 @@ if(modH->xTypeHW != TCP_HW)
 
         ulTaskNotifyTake(pdTRUE, 250); //wait notification from TXE interrupt
 /*
-* If you are porting the library to a different MCU check the 
+* If you are porting the library to a different MCU check the
 * USART datasheet and add the corresponding family in the following
 * preprocessor conditions
 */
-#if defined(STM32H7)  || defined(STM32F3) || defined(STM32L4)  
+#if defined(STM32H7)  || defined(STM32F3) || defined(STM32L4)
           while((modH->port->Instance->ISR & USART_ISR_TC) ==0 )
 #else
           // F429, F103, L152 ...
